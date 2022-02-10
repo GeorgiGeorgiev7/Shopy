@@ -1,23 +1,20 @@
 const express = require('express');
 
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+
+
 const app = express();
 
 
-app.use(express.urlencoded({extended: true})); 
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/add-product', (req, res) => {
-    res.send('<form action="/product" method="POST"><input name="title"/><button type="submit"/>');
+app.use(adminRoutes());
+app.use(shopRoutes());
+
+app.use((req, res) => {
+    res.status(404).send('<h1>Page not found</h1>');
 });
-
-app.post('/product', (req, res) => {
-    console.log(req.body);
-    res.redirect('/');
-});
-
-app.get('/', (req, res) => {
-    res.send('<h1>Welcome to my shop!</h1');
-});
-
 
 app.listen(5000, () =>
     console.log('>>> Server running: http://locallhost:5000'));
