@@ -27,6 +27,12 @@ exports.getCartPage = () => (req, res, next) => {
     });
 };
 
+exports.getOrdersPage = () => (req, res, next) => {
+    res.render('shop/orders', {
+        activeOrders: true
+    });
+};
+
 exports.getCheckoutPage = () => (req, res, next) => {
     res.render('shop/checkout', {
         activeCheckout: true
