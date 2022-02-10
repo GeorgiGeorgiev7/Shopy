@@ -4,10 +4,12 @@ const { products } = require('./admin');
 
 
 router.get('/', (req, res) => {
-
+    console.log(products);
     res.render('shop', {
         products,
-        path: '/'
+        pageTitle: 'Shopy',
+        activeShop: true,
+        productsCSS: true
     });
 });
 
