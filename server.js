@@ -1,10 +1,12 @@
-const express = require('express');
-
 const path = require('path');
 
-const adminData = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
+const express = require('express');
 const { create } = require('express-handlebars');
+
+const adminRouter = require('./routes/admin');
+const shopRouter = require('./routes/shop');
+
+const errorController = require('./controllers/404');
 
 
 const app = express();
@@ -19,12 +21,10 @@ app.set('view engine', 'hbs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/admin', adminData.router());
-app.use(shopRoutes());
+app.use('/admin', adminRouter());
+app.use(shopRouter());
 
-app.use((req, res) => {
-    res.status(404).render('404', { title: 'Page Not Found', message: 'Wrong path' });
-});
+app.use(errorController());
 
 app.listen(5000, () =>
     console.log('>>> Server running: http://locallhost:5000'));
