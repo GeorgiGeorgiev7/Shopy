@@ -13,7 +13,6 @@ exports.getAllProductsPage = () => (req, res) => {
 
 exports.getIndexPage = () => (req, res, next) => {
     const products = Product.fetchAll();
-    console.log('here');
     res.render('shop/index', {
         pageTitle: 'Shopy',
         products,
