@@ -1,0 +1,9 @@
+{{#if products.length}}
+<div class="grid">
+    {{#each products}}
+    {{> product}}
+    {{/each}}
+</div>
+{{else}}
+<h2>No products found. Maybe add one?</h2>
+{{/if}}
