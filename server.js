@@ -27,4 +27,4 @@ app.use(shopRouter());
 app.use(errorController());
 
 app.listen(5000, () =>
-    console.log('>>> Server running: http://locallhost:5000'));
+    console.log('>>> Server running: http://localhost:5000'));
