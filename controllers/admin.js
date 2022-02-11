@@ -3,20 +3,22 @@ const Product = require('../models/Product');
 
 exports.getAddProductPage = () => (req, res) => {
     res.render('admin/add-product', {
-        path: '/admin/add-product',
         activeAddProduct: true,
         productsCSS: true,
         formsCSS: true
     });
 };
 
-exports.postProduct = () => (req, res) => {
-    const { title, imageUrl, description, price } = req.body;
-
-    const product = new Product(title, imageUrl, description, price);
-    product.save();
-
-    res.redirect('/');
+exports.getEditProductPage = () => (req, res, next) => {
+    const product = Product.findById(req.params.productId);
+    if (!product) {
+        return res.redirect('/404');
+    }
+    res.render('admin/edit-product', {
+        product,
+        productsCSS: true,
+        formsCSS: true
+    });
 };
 
 exports.getAdminProductsPage = () => (req, res, next) => {
@@ -26,4 +28,13 @@ exports.getAdminProductsPage = () => (req, res, next) => {
         activeAdminProducts: true,
         productsCSS: true
     });
+};
+
+exports.postProduct = () => (req, res) => {
+    const { title, imageUrl, description, price } = req.body;
+
+    const product = new Product(title, imageUrl, description, +price);
+    product.save();
+
+    res.redirect('/');
 };
