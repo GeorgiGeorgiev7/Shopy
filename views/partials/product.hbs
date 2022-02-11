@@ -5,15 +5,8 @@
     <div class="card__image">
         <img src="{{imageUrl}}" alt="{{title}}">
     </div>
-    <div class="card__content">
-        <h2 class="product__price">${{price}}</h2>
-        <p class="product__description">
-            {{description}}
-        </p>
-    </div>
     <div class="card__actions">
-        <form action="/add-to-cart/:id" method="POST">
-            <button class="btn">Add to Cart</button>
-        </form>
+        <a href="/products/{{id}}" class="btn">Details</a>
+        {{> add-to-cart}}
     </div>
 </article>

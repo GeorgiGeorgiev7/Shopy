@@ -1,4 +1,5 @@
 const Product = require('../models/Product');
+const Cart = require('../models/Cart');
 
 
 exports.getAllProductsPage = () => (req, res) => {
@@ -11,7 +12,13 @@ exports.getAllProductsPage = () => (req, res) => {
     });
 };
 
-exports.getIndexPage = () => (req, res, next) => {
+exports.getDetailsPage = () => (req, res) => {
+    const id = req.params.id;
+    const product = Product.findById(id);
+    res.render('shop/product-details', product);
+};
+
+exports.getIndexPage = () => (req, res) => {
     const products = Product.fetchAll();
     res.render('shop/index', {
         pageTitle: 'Shopy',
@@ -21,19 +28,26 @@ exports.getIndexPage = () => (req, res, next) => {
     });
 };
 
-exports.getCartPage = () => (req, res, next) => {
+exports.getCartPage = () => (req, res) => {
     res.render('shop/cart', {
         activeCart: true
     });
 };
 
-exports.getOrdersPage = () => (req, res, next) => {
+exports.postProductToCart = () => (req, res) => {
+    console.log(req.body.productId);
+    const product = Product.findById(req.body.productId);
+    Cart.addProduct(product);
+    res.redirect('/cart');
+};
+
+exports.getOrdersPage = () => (req, res) => {
     res.render('shop/orders', {
         activeOrders: true
     });
 };
 
-exports.getCheckoutPage = () => (req, res, next) => {
+exports.getCheckoutPage = () => (req, res) => {
     res.render('shop/checkout', {
         activeCheckout: true
     });
