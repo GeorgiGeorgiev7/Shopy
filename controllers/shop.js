@@ -2,6 +2,15 @@ const Product = require('../models/Product');
 const Cart = require('../models/Cart');
 
 
+exports.getIndexPage = () => (req, res) => {
+    const products = Product.fetchAll();
+    res.render('shop/index', {
+        products,
+        activeIndex: true,
+        productsCSS: true
+    });
+};
+
 exports.getAllProductsPage = () => (req, res) => {
     const products = Product.fetchAll();
     res.render('shop/product-list', {
@@ -18,26 +27,22 @@ exports.getDetailsPage = () => (req, res) => {
     res.render('shop/product-details', product);
 };
 
-exports.getIndexPage = () => (req, res) => {
-    const products = Product.fetchAll();
-    res.render('shop/index', {
-        pageTitle: 'Shopy',
-        products,
-        activeIndex: true,
-        productsCSS: true
-    });
-};
-
 exports.getCartPage = () => (req, res) => {
+    const cart = Cart.getCart();
     res.render('shop/cart', {
-        activeCart: true
+        activeCart: true,
+        cart
     });
 };
 
 exports.postProductToCart = () => (req, res) => {
-    console.log(req.body.productId);
-    const product = Product.findById(req.body.productId);
+    const product = Product.findById(req.params.productId);
     Cart.addProduct(product);
+    res.redirect('/cart');
+};
+
+exports.removeProductFromCart = () => (req, res) => {
+    Cart.removeProduct(req.params.productId);
     res.redirect('/cart');
 };
 

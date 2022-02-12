@@ -54,7 +54,7 @@ exports.editProduct = () => (req, res) => {
 
 exports.deleteProduct = () => (req, res) => {
     const productId = req.params.productId;
-    Cart.deleteProduct(productId);
+    Cart.removeProduct(productId);
     Product.findByIdAndDelete(productId);
     
     res.redirect('/admin/products');

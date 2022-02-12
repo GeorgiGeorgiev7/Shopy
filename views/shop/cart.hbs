@@ -1,0 +1,9 @@
+{{#if cart.content.length}}
+<ul>
+    {{#each cart.content }}
+    {{> cart-product}}
+    {{/each}}
+</ul>
+{{else}}
+<h1>No Products in Cart</h1>
+{{/if}}

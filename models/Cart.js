@@ -16,12 +16,19 @@ module.exports = class Cart {
         cart.totalPrice += +product.price;
     }
 
-    static deleteProduct(productId) {
-        cart.content = cart.content.filter(p => {
-            p.id != productId;
-            cart.totalPrice -= p.price * p.quantity;
-        });
-        console.log(cart);
+    static removeProduct(productId) {
+        const productIdx = cart.content
+            .findIndex(p => p.id == productId);
+
+        if (productIdx == -1) {
+            return;
+        }
+
+        const prod = cart.content[productIdx];
+
+        cart.content.splice(productIdx, 1);
+
+        cart.totalPrice -= prod.price * prod.quantity;
     }
 
     static getCart() {
