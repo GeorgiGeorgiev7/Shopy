@@ -1,9 +1,8 @@
 const express = require('express');
-
 const setupMiddlewares = require('./util/middlewares');
+const { PORT } = require('./util/config');
 
 
-const PORT = 5000;
 const app = express();
 
 setupMiddlewares(app);
