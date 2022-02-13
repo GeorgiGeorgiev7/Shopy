@@ -1,9 +1,8 @@
 const Product = require('../models/Product');
-const Cart = require('../models/Cart');
 
 
-exports.getAdminProductsPage = () => (req, res, next) => {
-    const products = Product.fetchAll();
+exports.getAdminProductsPage = () => async (req, res, next) => {
+    const products = await Product.find().lean();
     res.render('admin/products', {
         products,
         activeAdminProducts: true,
@@ -19,17 +18,27 @@ exports.getAddProductPage = () => (req, res) => {
     });
 };
 
-exports.postProduct = () => (req, res) => {
+exports.postProduct = () => async (req, res) => {
     const { title, imageUrl, description, price } = req.body;
 
-    const product = new Product(title, imageUrl, description, +price);
-    product.save();
+    const product = new Product({
+        title,
+        imageUrl,
+        description,
+        price: Number(price),
+        creatorId: req.user._id
+    });
+
+    await product.save();
 
     res.redirect('/');
 };
 
-exports.getEditProductPage = () => (req, res, next) => {
-    const product = Product.findById(req.params.productId);
+exports.getEditProductPage = () => async (req, res, next) => {
+    const product = await Product
+        .findById(req.params.productId)
+        .lean();
+
     if (!product) {
         return res.redirect('/404');
     }
@@ -40,22 +49,27 @@ exports.getEditProductPage = () => (req, res, next) => {
     });
 };
 
-exports.editProduct = () => (req, res) => {
+exports.editProduct = () => async (req, res) => {
     const productId = req.params.productId;
-    const existing = Product.findById(productId);
+    const existing = await Product.findById(productId);
 
     const { title, imageUrl, description, price } = req.body;
-    const updatedProduct = { title, imageUrl, description, price };
 
-    existing.edit(updatedProduct);
+    Object.assign(existing, {
+        title,
+        imageUrl,
+        description,
+        price
+    });
+
+    await existing.save();
 
     res.redirect(`/products/${productId}`);
 };
 
-exports.deleteProduct = () => (req, res) => {
+exports.deleteProduct = () => async (req, res) => {
     const productId = req.params.productId;
-    Cart.removeProduct(productId);
-    Product.findByIdAndDelete(productId);
-    
+    await Product.findByIdAndRemove(productId);
+
     res.redirect('/admin/products');
 };

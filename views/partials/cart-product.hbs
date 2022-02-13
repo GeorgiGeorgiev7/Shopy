@@ -1,7 +1,8 @@
-<li>
-    <p>{{title}} ({{quantity}})</p>
-    <form action="/cart-delete/{{id}}" method="POST">
-        <button class="btn" type="submit">
+<li class="cart__item">
+    <h1>{{productId.title}}</h1>
+    <h2>Quantity: ({{quantity}})</h2>
+    <form action="/cart-delete/{{productId._id}}" method="POST">
+        <button class="btn danger" type="submit">
             Remove
         </button>
     </form>

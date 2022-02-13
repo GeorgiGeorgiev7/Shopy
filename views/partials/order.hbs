@@ -1,0 +1,10 @@
+<li class="orders__item">
+    <h1>Order - # {{_id}}</h1>
+    <ul class="orders__products">
+        {{#each products}}
+        <li class="orders__products-item">
+            {{productData.title}} ({{quantity}})
+        </li>
+        {{/each}}
+    </ul>
+</li>

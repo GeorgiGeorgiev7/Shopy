@@ -1,9 +1,14 @@
-{{#if cart.content.length}}
-<ul>
-    {{#each cart.content }}
+{{#if cart.items.length}}
+<ul class="cart__item-list">
+    {{#each cart.items }}
     {{> cart-product}}
     {{/each}}
 </ul>
+<div class="centered">
+    <form action="/orders" method="POST">
+        <button type="submit" class="btn">Order Now!</button>
+    </form>
+</div>
 {{else}}
-<h1>No Products in Cart</h1>
+<h1 class="centered">No Products in Cart</h1>
 {{/if}}

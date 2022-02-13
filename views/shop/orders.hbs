@@ -1,1 +1,9 @@
-<h2>ToDo</h2>
+{{#if orders.length}}
+<ul class="orders">
+    {{#each orders}}
+    {{> order}}
+    {{/each}}
+</ul>
+{{else}}
+<h1>No orders</h1>
+{{/if}}
