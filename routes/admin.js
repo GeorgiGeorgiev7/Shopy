@@ -2,18 +2,32 @@ const router = require('express').Router();
 
 const adminController = require('../controllers/admin');
 
+const isAuthenticated = require('../middlewares/guards/isAuthenticated');
 
-router.get('/products', adminController.getAdminProductsPage());
 
-router.get('/add-product', adminController.getAddProductPage());
+router.get('/products',
+    isAuthenticated(),
+    adminController.getAdminProductsPage());
 
-router.post('/add-product', adminController.postProduct());
+router.get('/add-product',
+    isAuthenticated(),
+    adminController.getAddProductPage());
 
-router.get('/edit-product/:productId', adminController.getEditProductPage());
+router.post('/add-product',
+    isAuthenticated(),
+    adminController.postProduct());
 
-router.post('/edit-product/:productId', adminController.editProduct());
+router.get('/edit-product/:productId',
+    isAuthenticated(),
+    adminController.getEditProductPage());
 
-router.post('/delete-product/:productId', adminController.deleteProduct());
+router.post('/edit-product/:productId',
+    isAuthenticated(),
+    adminController.editProduct());
+
+router.post('/delete-product/:productId',
+    isAuthenticated(),
+    adminController.deleteProduct());
 
 
 module.exports = () => router;

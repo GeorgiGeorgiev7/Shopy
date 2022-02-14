@@ -2,23 +2,41 @@ const router = require('express').Router();
 
 const shopController = require('../controllers/shop');
 
-router.get('/', shopController.getIndexPage());
+const isAuthenticated = require('../middlewares/guards/isAuthenticated');
 
-router.get('/products', shopController.getAllProductsPage());
 
-router.get('/products/:productId', shopController.getDetailsPage());
+router.get('/',
+    shopController.getIndexPage());
 
-router.get('/cart', shopController.getCartPage());
+router.get('/products',
+    shopController.getAllProductsPage());
 
-router.post('/cart/:productId', shopController.postProductToCart());
+router.get('/products/:productId',
+    shopController.getDetailsPage());
 
-router.post('/cart-delete/:productId', shopController.removeProductFromCart());
+router.get('/cart',
+    isAuthenticated(),
+    shopController.getCartPage());
 
-router.get('/orders', shopController.getOrdersPage());
+router.post('/cart/:productId',
+    isAuthenticated(),
+    shopController.postProductToCart());
 
-router.post('/orders', shopController.postOrder());
+router.post('/cart-delete/:productId',
+    isAuthenticated(),
+    shopController.removeProductFromCart());
 
-router.get('/checkout', shopController.getCheckoutPage());
+router.get('/orders',
+    isAuthenticated(),
+    shopController.getOrdersPage());
+
+router.post('/orders',
+    isAuthenticated(),
+    shopController.postOrder());
+
+router.get('/checkout',
+    isAuthenticated(),
+    shopController.getCheckoutPage());
 
 
 module.exports = () => router;
