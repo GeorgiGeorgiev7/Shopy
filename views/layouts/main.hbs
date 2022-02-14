@@ -6,10 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/main.css">
-    {{#if productsCSS}}<link rel="stylesheet" href="/css/product.css">{{/if}}
-    {{#if formsCSS}}<link rel="stylesheet" href="/css/forms.css">{{/if}}
-    {{#if ordersCSS}}<link rel="stylesheet" href="/css/orders.css">{{/if}}
-    {{#if cartCSS}}<link rel="stylesheet" href="/css/cart.css">{{/if}}
+    {{#if productsCSS}}
+    <link rel="stylesheet" href="/css/product.css">{{/if}}
+    {{#if formsCSS}}
+    <link rel="stylesheet" href="/css/forms.css">{{/if}}
+    {{#if ordersCSS}}
+    <link rel="stylesheet" href="/css/orders.css">{{/if}}
+    {{#if cartCSS}}
+    <link rel="stylesheet" href="/css/cart.css">{{/if}}
+    {{#if authCSS}}
+    <link rel="stylesheet" href="/css/auth.css">{{/if}}
     <title>Shopy</title>
 </head>
 
@@ -23,6 +29,7 @@
                 <li class="main-header__item">
                     <a class="{{#if activeProducts }}active{{/if}}" href="/products">Products</a>
                 </li>
+                {{#if isAuthenticated}}
                 <li class="main-header__item">
                     <a class="{{#if activeCart }}active{{/if}}" href="/cart">Cart</a>
                 </li>
@@ -30,11 +37,28 @@
                     <a class="{{#if activeOrders }}active{{/if}}" href="/orders">Orders</a>
                 </li>
                 <li class="main-header__item">
-                    <a class="{{#if activeAddProduct }}active{{/if}}"  href="/admin/add-product">Add product</a>
+                    <a class="{{#if activeAddProduct }}active{{/if}}" href="/admin/add-product">Add product</a>
                 </li>
                 <li class="main-header__item">
-                    <a class="{{#if activeAdminProducts }}active{{/if}}"  href="/admin/products">Admin Products</a>
+                    <a class="{{#if activeAdminProducts }}active{{/if}}" href="/admin/products">Admin Products</a>
                 </li>
+                {{/if}}
+            </ul>
+            <ul class="main-header__item-list">
+                {{#if isAuthenticated}}
+                <li class="main-header__item">
+                    <form action="/logout" method="POST">
+                        <button type="submit">Logout</button>
+                    </form>
+                </li>
+                {{else}}
+                <li class="main-header__item">
+                    <a class="{{#if activeLogin }}active{{/if}}" href="/login">Login</a>
+                </li>
+                <li class="main-header__item">
+                    <a class="{{#if activeSignup }}active{{/if}}" href="/signup">Signup</a>
+                </li>
+                {{/if}}
             </ul>
         </nav>
     </header>
@@ -44,4 +68,5 @@
     </main>
 
 </body>
+
 </html>

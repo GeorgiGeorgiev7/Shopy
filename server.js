@@ -1,6 +1,6 @@
 const express = require('express');
-const setupMiddlewares = require('./util/middlewares');
-const { PORT } = require('./util/config');
+const setupMiddlewares = require('./middlewares');
+const { PORT } = require('./config');
 
 
 const app = express();

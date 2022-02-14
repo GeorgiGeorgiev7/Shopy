@@ -4,6 +4,7 @@ const Product = require('../models/Product');
 exports.getAdminProductsPage = () => async (req, res, next) => {
     const products = await Product.find().lean();
     res.render('admin/products', {
+        isAuthenticated: req.session.user,
         products,
         activeAdminProducts: true,
         productsCSS: true
@@ -12,6 +13,7 @@ exports.getAdminProductsPage = () => async (req, res, next) => {
 
 exports.getAddProductPage = () => (req, res) => {
     res.render('admin/add-product', {
+        isAuthenticated: req.session.user,
         activeAddProduct: true,
         productsCSS: true,
         formsCSS: true
@@ -26,7 +28,7 @@ exports.postProduct = () => async (req, res) => {
         imageUrl,
         description,
         price: Number(price),
-        creatorId: req.user._id
+        creatorId: req.session.user._id
     });
 
     await product.save();
@@ -43,6 +45,7 @@ exports.getEditProductPage = () => async (req, res, next) => {
         return res.redirect('/404');
     }
     res.render('admin/edit-product', {
+        isAuthenticated: req.session.user,
         product,
         productsCSS: true,
         formsCSS: true

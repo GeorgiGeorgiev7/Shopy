@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { CONNECTION_STRING } = require('./config');
+const { CONNECTION_STRING } = require('../config');
 
 
 const connectDatabase = () => {
