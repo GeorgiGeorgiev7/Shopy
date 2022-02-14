@@ -31,7 +31,6 @@ exports.getIndexPage = () => async (req, res) => {
     const products = await Product.find().lean();
 
     res.render('shop/index', {
-        isAuthenticated: req.session.user,
         products,
         activeIndex: true,
         productsCSS: true

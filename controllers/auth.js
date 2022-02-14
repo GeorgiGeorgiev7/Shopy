@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs');
 exports.getLoginPage = () => (req, res) => {
     res.render('auth/login', {
         activeLogin: true,
-        isAuthenticated: req.session.user,
         formsCSS: true,
         authCSS: true
     });
